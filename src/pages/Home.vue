@@ -11,6 +11,7 @@ const pokemon = ref([])
 
 async function getSpecies() {
   await dex.getPokemonSpeciesList().then(d => pokemon.value = d.results)
+
 }
 
 onMounted(() => {
