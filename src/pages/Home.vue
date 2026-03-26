@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LinkBox from '@/components/LinkBox.vue';
 import { Pokedex } from 'pokeapi-js-wrapper';
 import { computed, onMounted, ref, type Ref } from 'vue';
 
@@ -26,8 +27,8 @@ onMounted(() => {
 <template>
   <h1 class="text-center">ajs-dex</h1>
   <nav class="w-screen flex justify-center"><input type="text" name="" class="bg-gray-100 p-1 rounded-md" id="" v-model="query" placeholder="type the name of a pokemon"></nav>
-  <ul class="grid auto-rows-fr grid-cols-7">
-    <li v-for="mon in filteredSearch"><RouterLink :to="{path: `/pokemon/${mon.name}`}">{{ mon.name }}</RouterLink></li>
+  <ul class="grid auto-rows-fr grid-cols-7 gap-3">
+    <LinkBox v-for="mon in filteredSearch" :name="mon.name"></LinkBox>
 
   </ul>
 </template>
