@@ -3,6 +3,9 @@
 import { onUpdated, ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { Bar } from 'vue-chartjs';
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const routeParams = useRoute()
 
@@ -13,10 +16,15 @@ const data = ref()
 const sprite = ref()
 const typeOne = ref()
 const typeTwo = ref()
-const baseStats = ref()
+const baseStats = ref([])
 const cry = ref()
 const abilities = ref()
 const moves = ref()
+
+const chartLabels = ref([])
+const chartVals = ref([])
+
+
 
 async function getData() {
   await fetch(url).then(data => data.json()).then(result => data.value = result)
@@ -27,7 +35,8 @@ async function getData() {
   cry.value = data.value.cries.latest
   abilities.value = data.value.abilities
   moves.value = data.value.moves
-  console.log(moves.value)
+  chartLabels.value = baseStats.value.map((s) => s.stat.name)
+  chartVals.value = baseStats.value.map((s) => s["base_stat"])
 }
 
 onMounted(() => {
@@ -45,11 +54,10 @@ onMounted(() => {
 
   </div>
 
-
-    <ul>
-      <h1 class="font-bold text-2xl">base stats</h1>
-      <li v-for="stat in baseStats">{{ stat.stat.name }}: {{ stat.base_stat }}</li>
-    </ul>
+  <Bar :data="{labels: chartLabels, datasets: [{data: chartVals}]}" :options="{responsive: true}"></Bar>
+  <div>
+    <h1 class="font-bold text-2xl">Stats</h1>
+  </div>
     <div>
       <h1 class="font-bold text-2xl">cry</h1>
       <audio :src="cry" controls="true"></audio>
