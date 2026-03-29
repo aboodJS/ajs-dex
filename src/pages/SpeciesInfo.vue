@@ -62,11 +62,13 @@ onMounted(() => {
       <h1 class="font-bold text-2xl">cry</h1>
       <audio :src="cry" controls="true"></audio>
     </div>
-    <div>
-      <h1>abilities</h1>
-      <ul>
-        <li v-for="an in abilities">{{ an.ability.name }} {{ an.is_hidden ? "(hidden)" : "" }}</li>
-      </ul>
+    <div class="grid justify-center">
+      <table class="table-auto">
+        <thead class="text-center"><tr class="text-center"><th class="text-center">abilites</th></tr></thead>
+        <tbody>
+          <tr><td v-for="a in abilities">{{ a.ability.name }}</td></tr>
+        </tbody>
+      </table>
     </div>
     <div>
       <ul>
