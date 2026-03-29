@@ -47,16 +47,16 @@ onMounted(() => {
 
 <template>
   <main>
-    <h1 class="font-bold text-2xl">{{ $route.params.name }}</h1>
-    <img class="h-54" :src="sprite" alt="" srcset="">
-    <div>
-    <span>{{ typeOne }} {{ typeTwo }}</span>
+    <div class="grid justify-center text-center">
+      <h1 class="font-bold text-2xl">{{ $route.params.name }}</h1>
+      <img class="h-54" :src="sprite" alt="" srcset="">
+    <span class="flex justify-evenly"><p class="text-center">{{ typeOne }}</p> <p class="text-center">{{ typeTwo }}</p></span>
 
   </div>
 
-  <Bar :data="{labels: chartLabels, datasets: [{data: chartVals}]}" :options="{responsive: true}"></Bar>
   <div>
     <h1 class="font-bold text-2xl">Stats</h1>
+    <Bar class="h-30 w-30" :data="{labels: chartLabels, datasets: [{data: chartVals, label: 'stats', barThickness: 30, backgroundColor: ['rgba(56,95,190,0.5)'], borderRadius: 50, base: 0}]}" :options="{responsive: true, aspectRatio: 4,indexAxis: 'y', backgroundColor: 'rgba(0, 0, 0, 0.1)'}"></Bar>
   </div>
     <div>
       <h1 class="font-bold text-2xl">cry</h1>
