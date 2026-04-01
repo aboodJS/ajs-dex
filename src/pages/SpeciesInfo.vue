@@ -3,6 +3,9 @@
 import { onUpdated, ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { Bar } from 'vue-chartjs';
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const routeParams = useRoute()
 
@@ -13,10 +16,15 @@ const data = ref()
 const sprite = ref()
 const typeOne = ref()
 const typeTwo = ref()
-const baseStats = ref()
+const baseStats = ref([])
 const cry = ref()
 const abilities = ref()
 const moves = ref()
+
+const chartLabels = ref([])
+const chartVals = ref([])
+
+
 
 async function getData() {
   await fetch(url).then(data => data.json()).then(result => data.value = result)
@@ -27,7 +35,8 @@ async function getData() {
   cry.value = data.value.cries.latest
   abilities.value = data.value.abilities
   moves.value = data.value.moves
-  console.log(moves.value)
+  chartLabels.value = baseStats.value.map((s) => s.stat.name)
+  chartVals.value = baseStats.value.map((s) => s["base_stat"])
 }
 
 onMounted(() => {
@@ -38,27 +47,29 @@ onMounted(() => {
 
 <template>
   <main>
-    <h1 class="font-bold text-2xl">{{ $route.params.name }}</h1>
-    <img class="h-54" :src="sprite" alt="" srcset="">
-    <div>
-    <span>{{ typeOne }} {{ typeTwo }}</span>
+    <div class="grid justify-center text-center">
+      <h1 class="font-bold text-2xl">{{ $route.params.name }}</h1>
+      <img class="h-54" :src="sprite" alt="" srcset="">
+    <span class="flex justify-evenly"><p class="text-center">{{ typeOne }}</p> <p class="text-center">{{ typeTwo }}</p></span>
 
   </div>
 
-
-    <ul>
-      <h1 class="font-bold text-2xl">base stats</h1>
-      <li v-for="stat in baseStats">{{ stat.stat.name }}: {{ stat.base_stat }}</li>
-    </ul>
+  <div>
+    <h1 class="font-bold text-2xl">Stats</h1>
+    <Bar class="h-30 w-30" :data="{labels: chartLabels, datasets: [{data: chartVals, label: 'stats', barThickness: 30, backgroundColor: ['rgba(56,95,190,0.5)'], borderRadius: 50, base: 0}]}" :options="{responsive: true, aspectRatio: 4,indexAxis: 'y', backgroundColor: 'rgba(0, 0, 0, 0.1)'}"></Bar>
+  </div>
     <div>
       <h1 class="font-bold text-2xl">cry</h1>
       <audio :src="cry" controls="true"></audio>
     </div>
-    <div>
-      <h1>abilities</h1>
-      <ul>
-        <li v-for="an in abilities">{{ an.ability.name }} {{ an.is_hidden ? "(hidden)" : "" }}</li>
-      </ul>
+    <div class="grid justify-center">
+      <table class="table-auto">
+        <thead class="text-center"><tr class="text-center"><th class="text-center">abilites</th></tr></thead>
+        <tbody>
+          <tr><td v-for="a in abilities">{{ a.ability.name }}</td></tr>
+
+        </tbody>
+      </table>
     </div>
     <div>
       <ul>

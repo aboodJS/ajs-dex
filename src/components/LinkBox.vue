@@ -15,7 +15,7 @@ onMounted(async() => {
 <template>
 
 <li class="p-3 shadow-md rounded grid justify-center">
-  <!-- <img :src="image" alt=""> -->
+  <img :src="image" :alt="$props.name">
   <RouterLink :to="{path: `/pokemon/${$props.name}`}">{{ $props.name }}</RouterLink>
 </li>
 
