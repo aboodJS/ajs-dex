@@ -67,6 +67,7 @@ onMounted(() => {
         <thead class="text-center"><tr class="text-center"><th class="text-center">abilites</th></tr></thead>
         <tbody>
           <tr><td v-for="a in abilities">{{ a.ability.name }}</td></tr>
+
         </tbody>
       </table>
     </div>
