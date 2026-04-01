@@ -13,9 +13,16 @@ onMounted(async() => {
 </script>
 
 <template>
-<li>
+<div>
   <img :src="image" :alt="$props.name">
   <RouterLink :to="{path: `/pokemon/${$props.name}`}">{{ $props.name }}</RouterLink>
-</li>
+</div>
 
 </template>
+
+<style scoped>
+div {
+  display: grid;
+   width: fit-content;
+}
+</style>
