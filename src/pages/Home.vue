@@ -25,9 +25,9 @@ onMounted(() => {
 
 
 <template>
-  <h1 class="text-center">ajs-dex</h1>
-  <nav class="w-screen flex justify-center"><input type="text" name="" class="bg-gray-100 p-1 rounded-md" id="" v-model="query" placeholder="type the name of a pokemon"></nav>
-  <ul class="grid auto-rows-fr grid-cols-7 gap-3">
+  <h1>ajs-dex</h1>
+  <nav><input type="text" name=""  id="" v-model="query" placeholder="type the name of a pokemon"></nav>
+  <ul >
     <LinkBox v-for="mon in filteredSearch" :name="mon.name"></LinkBox>
 
   </ul>

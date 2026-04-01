@@ -47,24 +47,24 @@ onMounted(() => {
 
 <template>
   <main>
-    <div class="grid justify-center text-center">
-      <h1 class="font-bold text-2xl">{{ $route.params.name }}</h1>
-      <img class="h-54" :src="sprite" alt="" srcset="">
-    <span class="flex justify-evenly"><p class="text-center">{{ typeOne }}</p> <p class="text-center">{{ typeTwo }}</p></span>
+    <div>
+      <h1>{{ $route.params.name }}</h1>
+      <img  :src="sprite" alt="" srcset="">
+    <span><p>{{ typeOne }}</p> <p>{{ typeTwo }}</p></span>
 
   </div>
 
   <div>
-    <h1 class="font-bold text-2xl">Stats</h1>
-    <Bar class="h-30 w-30" :data="{labels: chartLabels, datasets: [{data: chartVals, label: 'stats', barThickness: 30, backgroundColor: ['rgba(56,95,190,0.5)'], borderRadius: 50, base: 0}]}" :options="{responsive: true, aspectRatio: 4,indexAxis: 'y', backgroundColor: 'rgba(0, 0, 0, 0.1)'}"></Bar>
+    <h1 class="">Stats</h1>
+    <Bar class="" :data="{labels: chartLabels, datasets: [{data: chartVals, label: 'stats', barThickness: 30, backgroundColor: ['rgba(56,95,190,0.5)'], borderRadius: 50, base: 0}]}" :options="{responsive: true, aspectRatio: 4,indexAxis: 'y', backgroundColor: 'rgba(0, 0, 0, 0.1)'}"></Bar>
   </div>
     <div>
-      <h1 class="font-bold text-2xl">cry</h1>
+      <h1>cry</h1>
       <audio :src="cry" controls="true"></audio>
     </div>
-    <div class="grid justify-center">
-      <table class="table-auto">
-        <thead class="text-center"><tr class="text-center"><th class="text-center">abilites</th></tr></thead>
+    <div>
+      <table>
+        <thead ><tr ><th >abilites</th></tr></thead>
         <tbody>
           <tr><td v-for="a in abilities">{{ a.ability.name }}</td></tr>
 
@@ -73,7 +73,7 @@ onMounted(() => {
     </div>
     <div>
       <ul>
-        <h1 class="font-bold text-2xl">moves </h1>
+        <h1>moves </h1>
         <li v-for="move in moves">{{ move.move.name }}</li>
       </ul>
     </div>
