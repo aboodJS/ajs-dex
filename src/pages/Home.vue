@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LinkBox from '@/components/LinkBox.vue';
+import SideBar from '@/components/SideBar.vue';
 import { Pokedex } from 'pokeapi-js-wrapper';
 import { computed, onMounted, ref, type Ref } from 'vue';
 
@@ -26,14 +27,14 @@ onMounted(() => {
 
 <template>
 
-  <nav>
-      <h1>ajs-dex</h1>
-
-      <input type="text" name=""  id="" v-model="query" placeholder="type the name of a pokemon"></nav>
-
   <main>
-    <LinkBox v-for="mon in filteredSearch" :name="mon.name"></LinkBox>
-
+    <SideBar></SideBar>
+    <nav>
+      <h1>ajs-dex</h1>
+        <input type="text" name=""  id="" v-model="query" placeholder="type the name of a pokemon"></nav>
+    <section>
+      <LinkBox v-for="mon in filteredSearch" :name="mon.name"></LinkBox>
+    </section>
   </main>
 </template>
 
@@ -48,10 +49,10 @@ nav h1 {
   text-align: center;
 }
 
-main {
+section {
   margin: auto;
   gap: 12px;
-  height: 85vh;
+  height: 83vh;
   width: fit-content;
   overflow: scroll;
   justify-content: center;
@@ -59,4 +60,10 @@ main {
   list-style: none;
   grid-template-columns: repeat(5, 180px);
 }
+
+main {
+  display: grid;
+  gap: 12px;
+}
+
 </style>
