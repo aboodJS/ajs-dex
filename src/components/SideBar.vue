@@ -23,8 +23,8 @@ function switchState() {
         <a href="">
       <RouterLink to="/">Home</RouterLink>
     </a>
-    <a href="">
-      <RouterLink to="/about">About</RouterLink>
+    <a href="https://github.com/aboodJS/ajs-dex" target="_blank">
+      About
     </a>
     </section>
 
