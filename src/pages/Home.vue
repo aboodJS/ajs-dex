@@ -41,6 +41,7 @@ onMounted(() => {
 nav {
   display: grid;
   justify-content: center;
+  height: 15vh;
 }
 
 nav h1 {
@@ -50,9 +51,9 @@ nav h1 {
 main {
   margin: auto;
   gap: 12px;
-  height: 100vh;
+  height: 85vh;
   width: fit-content;
-  overflow-y: scroll;
+  overflow: scroll;
   justify-content: center;
   display: grid;
   list-style: none;
