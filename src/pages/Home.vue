@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import LinkBox from '@/components/LinkBox.vue';
 import SideBar from '@/components/SideBar.vue';
+import { Icon } from '@iconify/vue';
 import { Pokedex } from 'pokeapi-js-wrapper';
 import { computed, onMounted, ref, type Ref } from 'vue';
 
@@ -31,7 +32,11 @@ onMounted(() => {
     <SideBar></SideBar>
     <nav>
       <h1>ajs-dex</h1>
-        <input type="text" name=""  id="" v-model="query" placeholder="type the name of a pokemon"></nav>
+      <div class="searchBox">
+        <Icon icon="mdi:text-search-variant" class="absolute"></Icon>
+        <input type="text" name=""  id="" v-model="query" placeholder="type the name of a pokemon">
+      </div>
+      </nav>
     <section>
       <LinkBox v-for="mon in filteredSearch" :name="mon.name"></LinkBox>
     </section>
@@ -64,6 +69,33 @@ section {
 main {
   display: grid;
   gap: 12px;
+}
+
+input {
+  width: 950px;
+  border: 0;
+  border-bottom: 2px rgba(97, 97, 97, 0.375) solid;
+  outline: none;
+  font-size: large;
+}
+
+input:focus {
+  border-color: rgb(93, 93, 255);
+}
+
+input:focus > *  {
+  color: rgb(93, 93, 255);
+}
+
+.searchBox {
+  position: relative;
+  font-size: large;
+}
+
+.absolute {
+  position: absolute;
+  font-size: x-large;
+  right: 0;
 }
 
 </style>
