@@ -28,7 +28,7 @@ const chartVals = ref([])
 
 async function getData() {
   await fetch(url).then(data => data.json()).then(result => data.value = result)
-  sprite.value = data.value.sprites.other["official-artwork"].front_default
+  sprite.value = data.value.sprites.other["showdown"].front_default
   typeOne.value = data.value.types[0].type.name
   typeTwo.value = data.value.types.length > 1 ? data.value.types[1].type.name : ""
   baseStats.value = data.value.stats
@@ -47,10 +47,12 @@ onMounted(() => {
 
 <template>
   <main>
-    <div>
-      <h1>{{ $route.params.name }}</h1>
+    <div id="pokemon_summery">
       <img  :src="sprite" alt="" srcset="">
-    <span><p>{{ typeOne }}</p> <p>{{ typeTwo }}</p></span>
+      <span>
+      <h1>{{ $route.params.name }}</h1>
+
+      <p>{{ typeOne }}</p> <p>{{ typeTwo }}</p></span>
 
   </div>
 
@@ -79,3 +81,42 @@ onMounted(() => {
     </div>
   </main>
 </template>
+
+<style scoped>
+
+main {
+  display: grid;
+   background-color: rgb(41, 34, 34);
+  color: white;
+}
+
+#pokemon_summery {
+  height: fit-content;
+  width: 30vw;
+  justify-self: center;
+  justify-content: space-evenly;
+  align-content: center;
+ display: grid;
+ grid-template-columns: 30% 70%;
+ grid-template-rows: 1fr;
+ gap: 64px;
+}
+
+#pokemon_summery > img {
+  height: 150px;
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+#pokemon_summery > h1 {
+    grid-column-start: 2;
+  grid-column-end: 2;
+}
+
+#pokemon_summery > span {
+   grid-column-start: 2;
+  grid-column-end: 2;
+}
+</style>

@@ -6,7 +6,7 @@ const url = `https://pokeapi.co/api/v2/pokemon/${props.name}`
 const image = ref()
 
 onMounted(async() => {
-  // await fetch(url).then(data => data.json()).then(result => image.value = result.sprites.other["official-artwork"].front_default)
+  // await fetch(url).then(data => data.json()).then(result => image.value = result.sprites.other["showdown"].front_default).catch((err) => console.log(err))
 
 })
 
@@ -15,8 +15,7 @@ onMounted(async() => {
 <template>
 <div>
 
-  <RouterLink :to="{path: `/pokemon/${$props.name}`}">
-
+  <RouterLink style="{color: white}" :to="{path: `/pokemon/${$props.name}`}">
     <img :src="image" :alt="$props.name">
     <p>
 
@@ -34,5 +33,14 @@ div {
   justify-content: center;
   text-align: center;
    width: fit-content;
+}
+
+* {
+  color: white;
+  text-decoration: none;
+}
+
+image {
+  width:  1rem;
 }
 </style>

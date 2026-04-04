@@ -13,7 +13,17 @@
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
-    <script type="module" src="pokeapi-js-wrapper-sw.js"></script>
+    <script>
+  window.addEventListener('load', () => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/pokeapi-js-wrapper-sw.js').then(() => {
+        console.info('Service worker registered!');
+      }).catch((error) => {
+        console.warn(`Error registering service worker:\n${error}.`);
+      });
+    }
+  });
+</script>
   </body>
 </html>
 

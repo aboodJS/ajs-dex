@@ -77,6 +77,8 @@ input {
   border-bottom: 2px rgba(97, 97, 97, 0.375) solid;
   outline: none;
   font-size: large;
+  background-color: rgb(41, 34, 34);
+  color: white;
 }
 
 input:focus {
@@ -90,12 +92,19 @@ input:focus > *  {
 .searchBox {
   position: relative;
   font-size: large;
+background-color: rgb(41, 34, 34);
+  color: white;
 }
 
 .absolute {
   position: absolute;
   font-size: x-large;
   right: 0;
+}
+
+main {
+  background-color: rgb(41, 34, 34);
+  color: white;
 }
 
 </style>

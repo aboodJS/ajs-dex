@@ -37,6 +37,7 @@ aside {
   height: 100vh;
   position:absolute;
   transition: margin 200ms;
+
 }
 
 section {
@@ -50,7 +51,7 @@ section {
 a {
   text-decoration: none;
   font-size: large;
-  color: black;
+  color: white;
   font-weight: bold;
 }
 
