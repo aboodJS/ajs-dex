@@ -64,15 +64,12 @@ onMounted(() => {
       <h1>cry</h1>
       <audio :src="cry" controls="true"></audio>
     </div>
-    <div>
-      <table>
-        <thead ><tr ><th >abilites</th></tr></thead>
-        <tbody>
-          <tr><td v-for="a in abilities">{{ a.ability.name }}</td></tr>
-
-        </tbody>
-      </table>
-    </div>
+    <table>
+      <tbody>
+        <tr><h4>Abilities</h4></tr>
+        <tr><td v-for="ability in abilities">{{ ability.ability.name }}</td></tr>
+      </tbody>
+    </table>
     <div>
       <ul>
         <h1>moves </h1>
@@ -119,4 +116,21 @@ main {
    grid-column-start: 2;
   grid-column-end: 2;
 }
+
+table {
+  text-align: center;
+  border: 1px white solid;
+}
+
+td {
+  border: 1px white solid;
+
+}
+
+tr h4 {
+  text-align: center;
+  margin: 0;
+  margin-inline: auto;
+}
+
 </style>
