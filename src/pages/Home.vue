@@ -3,6 +3,7 @@ import LinkBox from '@/components/LinkBox.vue';
 import SideBar from '@/components/SideBar.vue';
 import { Icon } from '@iconify/vue';
 import { Pokedex } from 'pokeapi-js-wrapper';
+import { flattenDiagnosticMessageText } from 'typescript';
 import { computed, onMounted, ref, type Ref } from 'vue';
 
 const dex = new Pokedex({cacheImages: true})
@@ -31,7 +32,8 @@ onMounted(() => {
   <main>
     <SideBar></SideBar>
     <nav>
-      <h1>ajs-dex</h1>
+      <h1 class="mobile-hidden">ajs-dex</h1>
+      <span id="mobile-bar"><h2>ajs-dex</h2> <span :style="{display: 'flex', gap: '12px'}"><a href=""><RouterLink to="/">Home</RouterLink></a><a href="https://github.com/aboodJS/ajs-dex">About</a></span></span>
       <div class="searchBox">
         <Icon icon="mdi:text-search-variant" class="absolute"></Icon>
         <input type="text" name=""  id="" v-model="query" placeholder="type the name of a pokemon">
@@ -66,6 +68,8 @@ section {
   grid-template-columns: repeat(5, 180px);
 }
 
+
+
 main {
   display: grid;
   gap: 12px;
@@ -94,6 +98,7 @@ input:focus > *  {
   font-size: large;
 background-color: rgb(41, 34, 34);
   color: white;
+  width: fit-content;
 }
 
 .absolute {
@@ -105,6 +110,34 @@ background-color: rgb(41, 34, 34);
 main {
   background-color: rgb(41, 34, 34);
   color: white;
+}
+
+#mobile-bar {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  section {
+    grid-template-columns: repeat(2, 220px);
+    gap: 0;
+  }
+
+  .searchBox {
+    width: 400px;
+  }
+
+  .mobile-hidden {
+    display: none;
+  }
+
+  #mobile-bar {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  align-items: center;
+}
+
+
 }
 
 </style>

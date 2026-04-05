@@ -15,7 +15,7 @@ function switchState() {
 <template>
   <aside :class="isSideOpen === true ? 'hide' : ''">
     <section>
-      <div @click="switchState" :style="{position: 'absolute', fontSize: '25px', left: '115%', top: '4%'}" >
+      <div @click="switchState" class="menu-btn" >
         <Icon  icon="mdi:menu" />
 
       </div>
@@ -40,6 +40,13 @@ aside {
 
 }
 
+.menu-btn {
+  position: absolute;
+  font-size: 25px;
+  left: 115%;
+  top: 4%
+}
+
 section {
   position: relative;
   padding-left: 1rem;
@@ -58,6 +65,16 @@ a {
 .hide {
   margin-left: -9%;
 
+}
+
+@media (max-width: 720px) {
+  .hide {
+    margin-left: -15%;
+  }
+
+  aside {
+    display: none;
+  }
 }
 
 </style>
