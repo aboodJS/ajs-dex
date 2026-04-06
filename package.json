@@ -18,11 +18,14 @@
     "@tailwindcss/vite": "^4.2.2",
     "chart.js": "^4.5.1",
     "pokeapi-js-wrapper": "^1.2.8",
+    "register-service-worker": "^1.7.2",
     "vue": "^3.5.30",
     "vue-chartjs": "^5.3.3",
     "vue-router": "^5.0.3"
   },
   "devDependencies": {
+    "@iconify-json/material-symbols": "^1.2.64",
+    "@iconify/vue": "^5.0.0",
     "@tsconfig/node24": "^24.0.4",
     "@types/jsdom": "^28.0.0",
     "@types/node": "^24.12.0",
