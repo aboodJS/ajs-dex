@@ -35,7 +35,7 @@ onMounted(() => {
       <h1 class="mobile-hidden">ajs-dex</h1>
       <span id="mobile-bar"><h2>ajs-dex</h2> <span :style="{display: 'flex', gap: '12px'}"><a href=""><RouterLink to="/">Home</RouterLink></a><a href="https://github.com/aboodJS/ajs-dex">About</a></span></span>
       <div class="searchBox">
-        <Icon icon="mdi:text-search-variant" class="absolute"></Icon>
+        <Icon icon="mdi:text-search-variant" class="absolute mobile-hidden"></Icon>
         <input type="text" name=""  id="" v-model="query" placeholder="type the name of a pokemon">
       </div>
       </nav>

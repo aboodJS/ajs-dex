@@ -17,12 +17,10 @@ const sprite = ref()
 const typeOne = ref()
 const typeTwo = ref()
 const baseStats = ref([])
-const cry = ref()
 const abilities = ref()
 const moves = ref()
 
-const chartLabels = ref([])
-const chartVals = ref([])
+
 
 
 
@@ -32,11 +30,8 @@ async function getData() {
   typeOne.value = data.value.types[0].type.name
   typeTwo.value = data.value.types.length > 1 ? data.value.types[1].type.name : ""
   baseStats.value = data.value.stats
-  cry.value = data.value.cries.latest
   abilities.value = data.value.abilities
   moves.value = data.value.moves
-  chartLabels.value = baseStats.value.map((s) => s.stat.name)
-  chartVals.value = baseStats.value.map((s) => s["base_stat"])
 }
 
 onMounted(() => {
@@ -56,17 +51,18 @@ onMounted(() => {
 
   </div>
 
-  <div>
-    <h1 class="">Stats</h1>
-    <Bar class="" :data="{labels: chartLabels, datasets: [{data: chartVals, label: 'stats', barThickness: 30, backgroundColor: ['rgba(56,95,190,0.5)'], borderRadius: 50, base: 0}]}" :options="{responsive: true, aspectRatio: 4,indexAxis: 'y', backgroundColor: 'rgba(0, 0, 0, 0.1)'}"></Bar>
-  </div>
-    <div>
-      <h1>cry</h1>
-      <audio :src="cry" controls="true"></audio>
-    </div>
+  <h1 class="">Stats</h1>
+  <section id="stats-sheet">
+    <div v-for="stat, i in baseStats"><p>{{ stat.stat.name.split("-").join(" ") }}: {{ stat["base_stat"] }}</p> <span :style="{backgroundColor: `${stat['base_stat'] >= 100 ? 'green' : stat['base_stat'] >= 60 ? 'yellow' : stat['base_stat'] <= 60 ? 'crimson' : 'orange'  }`, height: '22px', width: `${stat['base_stat']}px`, borderRadius: '12px'}"></span></div>
+  </section>
     <table>
       <tbody>
-        <tr><h4>Abilities</h4></tr>
+
+          <th>
+
+            <h4>Abilities</h4>
+          </th>
+
         <tr><td v-for="ability in abilities">{{ ability.ability.name }}</td></tr>
       </tbody>
     </table>
@@ -127,10 +123,34 @@ td {
 
 }
 
-tr h4 {
+
+
+th h4 {
   text-align: center;
   margin: 0;
-  margin-inline: auto;
+}
+
+#stats-sheet > div {
+ display: flex;
+  align-items: center;
+}
+
+#stats-sheet > div p {
+  display: flex;
+  justify-content: space-between;
+  width: 9rem;
+}
+
+@media (max-width: 720px) {
+  #pokemon_summery > img {
+    height: 100px;
+    align-self: center;
+  }
+
+  #pokemon_summery {
+    gap: 60px;
+    width: 50vw;
+  }
 }
 
 </style>
