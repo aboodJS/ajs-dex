@@ -1,9 +1,8 @@
 <script setup lang="ts">
 
-import { onUpdated, ref } from 'vue';
+import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { Bar } from 'vue-chartjs';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -18,10 +17,13 @@ const typeOne = ref()
 const typeTwo = ref()
 const baseStats = ref([])
 const abilities = ref()
-const moves = ref()
+const fullMovesList = ref()
+const eggMoveList = ref()
+const levelupMoveList = ref()
+const machineMoveList = ref()
 
 
-
+// moves.value[0]["version_group_details"][0]["move_learn_method"].name
 
 
 async function getData() {
@@ -31,7 +33,10 @@ async function getData() {
   typeTwo.value = data.value.types.length > 1 ? data.value.types[1].type.name : ""
   baseStats.value = data.value.stats
   abilities.value = data.value.abilities
-  moves.value = data.value.moves
+  fullMovesList.value = data.value.moves
+  eggMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'egg' )
+  levelupMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'level-up' )
+  machineMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'machine' )
 }
 
 onMounted(() => {
@@ -53,7 +58,7 @@ onMounted(() => {
 
   <h1 class="">Stats</h1>
   <section id="stats-sheet">
-    <div v-for="stat, i in baseStats"><p>{{ stat.stat.name.split("-").join(" ") }}: {{ stat["base_stat"] }}</p> <span :style="{backgroundColor: `${stat['base_stat'] >= 100 ? 'green' : stat['base_stat'] >= 60 ? 'yellow' : stat['base_stat'] <= 60 ? 'crimson' : 'orange'  }`, height: '22px', width: `${stat['base_stat']}px`, borderRadius: '12px'}"></span></div>
+    <div v-for="stat, i in baseStats"><p>{{ stat.stat.name.split("-").join(" ") }}: {{ stat["base_stat"] }}</p> <span :style="{backgroundColor: `${stat['base_stat'] >= 100 ? 'green' : stat['base_stat'] >= 60 ? 'yellow' : stat['base_stat'] <= 60 ? 'crimson' : 'orange'  }`, height: '22px', width: `calc(${stat['base_stat']}px + 40px)`, borderRadius: '12px'}"></span></div>
   </section>
     <table>
       <tbody>
@@ -69,7 +74,16 @@ onMounted(() => {
     <div>
       <ul>
         <h1>moves </h1>
-        <li v-for="move in moves">{{ move.move.name }}</li>
+        <hr>
+        <h2>level up moves</h2>
+        <ul><li v-for="move in levelupMoveList">{{ move.move.name.split("-").join(" ") }}</li></ul>
+
+        <hr>
+        <h2>machine moves</h2>
+        <ul><li v-for="move in machineMoveList">{{ move.move.name.split("-").join(" ")  }}</li></ul>
+        <hr>
+        <h2>egg moves</h2>
+        <ul><li v-for="move in eggMoveList">{{ move.move.name.split("-").join(" ")  }}</li></ul>
       </ul>
     </div>
   </main>
