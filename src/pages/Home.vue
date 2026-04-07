@@ -3,7 +3,6 @@ import LinkBox from '@/components/LinkBox.vue';
 import SideBar from '@/components/SideBar.vue';
 import { Icon } from '@iconify/vue';
 import { Pokedex } from 'pokeapi-js-wrapper';
-import { flattenDiagnosticMessageText } from 'typescript';
 import { computed, onMounted, ref, type Ref } from 'vue';
 
 const dex = new Pokedex({cacheImages: true})
@@ -18,7 +17,7 @@ const filteredSearch = computed(() => {
 
 async function getSpecies() {
   await dex.getPokemonSpeciesList().then(d => pokemon.value = d.results)
-  console.log(pokemon.value)
+  console.log(pokemon.value[0].url)
 }
 
 onMounted(() => {
@@ -40,7 +39,10 @@ onMounted(() => {
       </div>
       </nav>
     <section>
-      <LinkBox v-for="mon in filteredSearch" :name="mon.name"></LinkBox>
+      <div v-for="mon in filteredSearch" >
+        <img loading="lazy" :src="`https://github.com/PokeAPI/sprites/raw/master/sprites/pokemon/other/showdown/${mon.url.match(/\d+/g)[1]}.gif`" :alt="mon.name">
+        <RouterLink :to="{path: `/pokemon/${mon.name}`}"><p>{{ mon.name }}</p></RouterLink>
+      </div>
     </section>
   </main>
 </template>
@@ -68,6 +70,24 @@ section {
   grid-template-columns: repeat(5, 180px);
 }
 
+section img {
+  height: 6rem;
+}
+
+section div {
+  display: grid;
+  text-align: center;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+  height: fit-content;
+  align-content: center;
+}
+
+section a {
+    text-decoration: none;
+  color: white;
+}
 
 
 main {
