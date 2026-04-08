@@ -21,12 +21,14 @@ const fullMovesList = ref()
 const eggMoveList = ref()
 const levelupMoveList = ref()
 const machineMoveList = ref()
-
+const speciesData = ref()
+const forms = ref([])
+const formSprites = ref([])
 
 // moves.value[0]["version_group_details"][0]["move_learn_method"].name
 
 
-async function getData() {
+async function getGeneralData() {
   await fetch(url).then(data => data.json()).then(result => data.value = result)
   sprite.value = data.value.sprites.other["showdown"].front_default
   typeOne.value = data.value.types[0].type.name
@@ -37,10 +39,23 @@ async function getData() {
   eggMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'egg' )
   levelupMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'level-up' )
   machineMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'machine' )
+  await fetch(data.value.species.url).then(data => data.json()).then(result => speciesData.value = result)
 }
 
-onMounted(() => {
-  getData()
+async function getSpeciesData() {
+  await fetch(data.value.species.url).then(data => data.json()).then(result => speciesData.value = result)
+  forms.value = speciesData.value.varieties
+  for (let i = 0; i < forms.value.length; i++) {
+    console.log(forms.value[i].pokemon.url)
+    await fetch(forms.value[i].pokemon.url).then(data => data.json()).then(result => formSprites.value.push(result.sprites.other["official-artwork"]))
+
+  }
+}
+
+onMounted(async () => {
+  await getGeneralData()
+   await getSpeciesData()
+   console.log(formSprites.value)
 })
 
 </script>
@@ -85,6 +100,12 @@ onMounted(() => {
         <h2>egg moves</h2>
         <ul><li v-for="move in eggMoveList">{{ move.move.name.split("-").join(" ")  }}</li></ul>
       </ul>
+    </div>
+    <h1>forms</h1>
+    <div style="display: grid; grid-template-rows: repeat(2, 1fr); grid-template-columns: repeat(3, 1fr);" v-if="forms.length > 1">
+      <section style="display: grid; justify-content: center; text-align: center;" v-for="form, i in forms">{{ form.pokemon.name.split("-").join(" ") }}
+        <img style="height: 220px;" :src="formSprites[i].front_default" alt="">
+      </section>
     </div>
   </main>
 </template>
