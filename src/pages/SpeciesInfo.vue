@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import MoveBox from '@/components/MoveBox.vue';
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const routeParams = useRoute()
@@ -22,19 +23,12 @@ const eggMoveList = ref()
 const levelupMoveList = ref()
 const machineMoveList = ref()
 
+const moveDetails = ref({})
+
 
 // moves.value[0]["version_group_details"][0]["move_learn_method"].name
 
 
-async function getMoveDetails(moveUrl: string) {
-  await fetch(moveUrl).then(d => d.json()).then(r => {
-    console.log(r.name.split("-").join(" "))
-    console.log(r.power)
-    console.log(r.pp)
-    console.log(r.accuracy)
-    console.log(r["flavor_text_entries"][0]['flavor_text'])
-  })
-}
 
 async function getData() {
   await fetch(url).then(data => data.json()).then(result => data.value = result)
@@ -57,6 +51,7 @@ onMounted(() => {
 
 <template>
   <main>
+    <dialog></dialog>
     <div id="pokemon_summery">
       <img  :src="sprite" alt="" srcset="">
       <span>
@@ -86,14 +81,15 @@ onMounted(() => {
         <h1>moves </h1>
         <hr>
         <h2>level up moves</h2>
-        <ul><li @click="() => getMoveDetails(move.move.url)" v-for="move in levelupMoveList">{{ move.move.name.split("-").join(" ") }}</li></ul>
+        <ul style="display: grid; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in levelupMoveList">
+      </MoveBox></ul>
 
         <hr>
         <h2>machine moves</h2>
-        <ul><li @click="() => getMoveDetails(move.move.url)" v-for="move in machineMoveList">{{ move.move.name.split("-").join(" ")  }}</li></ul>
+        <ul style="display: grid; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in machineMoveList"></MoveBox></ul>
         <hr>
         <h2>egg moves</h2>
-        <ul><li @click="() => getMoveDetails(move.move.url)" v-for="move in eggMoveList">{{ move.move.name.split("-").join(" ")  }}</li></ul>
+        <ul style="display: grid; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in eggMoveList"></MoveBox></ul>
       </ul>
     </div>
   </main>
