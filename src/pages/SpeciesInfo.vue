@@ -78,17 +78,19 @@ onMounted(async () => {
     <table>
       <tbody>
 
-          <th>
+        <tr>
+              <th>
 
-            <h4>Abilities</h4>
-          </th>
+              abilities
+            </th>
+            </tr>
 
-        <tr><td v-for="ability in abilities">{{ ability.ability.name }}</td></tr>
+        <tr><td v-for="ability in abilities">{{ ability.ability.name.split("-").join(" ") }}</td></tr>
       </tbody>
     </table>
     <div>
-      <ul>
-        <h1>moves </h1>
+      <ul id="move_list">
+        <h1>moves</h1>
         <hr>
         <h2>level up moves</h2>
         <ul><li v-for="move in levelupMoveList">{{ move.move.name.split("-").join(" ") }}</li></ul>
@@ -101,8 +103,8 @@ onMounted(async () => {
         <ul><li v-for="move in eggMoveList">{{ move.move.name.split("-").join(" ")  }}</li></ul>
       </ul>
     </div>
-    <h1>forms</h1>
-    <div style="display: grid; grid-template-rows: repeat(2, 1fr); grid-template-columns: repeat(3, 1fr);" v-if="forms.length > 1">
+    <h1 v-if="forms.length > 1">forms</h1>
+    <div  id="form-section" v-if="forms.length > 1">
       <section style="display: grid; justify-content: center; text-align: center;" v-for="form, i in forms">{{ form.pokemon.name.split("-").join(" ") }}
         <img style="height: 220px;" :src="formSprites[i].front_default" alt="">
       </section>
@@ -148,21 +150,17 @@ main {
   grid-column-end: 2;
 }
 
-table {
-  text-align: center;
-  border: 1px white solid;
+table, td, th {
+  border: 1px solid white;
 }
 
 td {
-  border: 1px white solid;
-
+  text-align: center;
 }
 
 
-
-th h4 {
+th {
   text-align: center;
-  margin: 0;
 }
 
 #stats-sheet > div {
@@ -176,6 +174,17 @@ th h4 {
   width: 9rem;
 }
 
+#move_list {
+  margin: 0;
+  padding: 0;
+}
+
+#form-section {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr)
+}
+
 @media (max-width: 720px) {
   #pokemon_summery > img {
     height: 100px;
@@ -185,6 +194,14 @@ th h4 {
   #pokemon_summery {
     gap: 60px;
     width: 50vw;
+  }
+
+  #form-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #form-section img {
+    width:  190px;
   }
 }
 
