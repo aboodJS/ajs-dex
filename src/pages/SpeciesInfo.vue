@@ -24,6 +24,7 @@ const evoData = ref()
 
 
 
+
 // moves.value[0]["version_group_details"][0]["move_learn_method"].name
 
 
@@ -39,12 +40,12 @@ async function getData() {
   eggMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'egg' )
   levelupMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'level-up' )
   machineMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'machine' )
-  evoData.value = await fetch(data.value.species.url).then(d => d.json()).then(async rOne => await fetch(rOne['evolution_chain'].url).then(d => d.json()))
+  await fetch(data.value.species.url).then(d => d.json()).then(async rOne => await fetch(rOne['evolution_chain'].url).then(d => d.json())).then(rTwo => evoData.value = rTwo.chain)
   console.log(evoData.value)
 }
 
-onMounted(() => {
-  getData()
+onMounted(async () => {
+  await getData()
 })
 
 </script>
@@ -76,6 +77,11 @@ onMounted(() => {
         <tr><td v-for="ability in abilities">{{ ability.ability.name }}</td></tr>
       </tbody>
     </table>
+    <section>
+
+        <h4>evolution chain</h4>
+
+    </section>
     <div>
       <ul>
         <h1>moves </h1>
