@@ -3,9 +3,7 @@
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import MoveBox from '@/components/MoveBox.vue';
-Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const routeParams = useRoute()
 
@@ -23,7 +21,6 @@ const eggMoveList = ref()
 const levelupMoveList = ref()
 const machineMoveList = ref()
 
-const moveDetails = ref({})
 
 
 // moves.value[0]["version_group_details"][0]["move_learn_method"].name
