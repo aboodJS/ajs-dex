@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import MoveBox from '@/components/MoveBox.vue';
+import StatGraph from '@/components/StatGraph.vue';
 
 const routeParams = useRoute()
 
@@ -59,9 +60,8 @@ onMounted(() => {
   </div>
 
   <h1 class="">Stats</h1>
-  <section id="stats-sheet">
-    <div v-for="stat, i in baseStats"><p>{{ stat.stat.name.split("-").join(" ") }}: {{ stat["base_stat"] }}</p> <span :style="{backgroundColor: `${stat['base_stat'] >= 100 ? 'green' : stat['base_stat'] >= 60 ? 'yellow' : stat['base_stat'] <= 60 ? 'crimson' : 'orange'  }`, height: '22px', width: `calc(${stat['base_stat']}px + 40px)`, borderRadius: '12px'}"></span></div>
-  </section>
+
+     <StatGraph :stat-list="baseStats"></StatGraph>
     <table>
       <tbody>
 
