@@ -142,7 +142,7 @@ main {
   }
 
   .searchBox {
-    width: 400px;
+    width: 200px;
   }
 
   .mobile-hidden {
