@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import LinkBox from '@/components/LinkBox.vue';
 import SideBar from '@/components/SideBar.vue';
 import { Icon } from '@iconify/vue';
 import { Pokedex } from 'pokeapi-js-wrapper';
