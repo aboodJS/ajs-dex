@@ -40,12 +40,11 @@ async function getData() {
   eggMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'egg' )
   levelupMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'level-up' )
   machineMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'machine' )
-  await fetch(data.value.species.url).then(d => d.json()).then(async rOne => await fetch(rOne['evolution_chain'].url).then(d => d.json())).then(rTwo => evoData.value = rTwo.chain)
-  console.log(evoData.value)
+  evoSpecies.value = evoData.value.species
 }
 
-onMounted(async () => {
-  await getData()
+onMounted(() => {
+   getData()
 })
 
 </script>
@@ -79,7 +78,10 @@ onMounted(async () => {
     </table>
     <section>
 
-        <h4>evolution chain</h4>
+        <h1>evolution chain</h1>
+        <div id="evo-sheet">
+          <!-- {{ evoSpecies.name }} -->
+        </div>
 
     </section>
     <div>
@@ -165,6 +167,10 @@ th h4 {
   display: flex;
   justify-content: space-between;
   width: 9rem;
+}
+
+#evo-sheet {
+  display: flex;
 }
 
 @media (max-width: 720px) {
