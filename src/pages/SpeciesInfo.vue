@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
-import { ref } from 'vue';
-import { onMounted } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import MoveBox from '@/components/MoveBox.vue';
 import StatGraph from '@/components/StatGraph.vue';
@@ -21,12 +20,17 @@ const fullMovesList = ref()
 const eggMoveList = ref()
 const levelupMoveList = ref()
 const machineMoveList = ref()
+const altSprites = ref([])
 
 
 
 // moves.value[0]["version_group_details"][0]["move_learn_method"].name
 
+async function getAltFormData() {
+  return await fetch(data.value.species.url).then(d => d.json()).then(f => f.varieties.filter((i) => i['is_default'] === false))
+}
 
+const altForms = ref()
 
 async function getData() {
   await fetch(url).then(data => data.json()).then(result => data.value = result)
@@ -41,8 +45,14 @@ async function getData() {
   machineMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'machine' )
 }
 
-onMounted(() => {
-  getData()
+onBeforeMount(async () => {
+  await getData()
+ altForms.value = await getAltFormData()
+ altForms.value.forEach(async e => {
+  await fetch(e.pokemon.url).then(i => i.json()).then(j => altSprites.value.push(j.sprites.other['official-artwork']['front_default']))
+  console.log(altSprites.value)
+ });
+
 })
 
 </script>
@@ -88,6 +98,18 @@ onMounted(() => {
         <h2>egg moves</h2>
         <ul style="display: grid; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in eggMoveList"></MoveBox></ul>
       </ul>
+      <hr>
+    </div>
+    <div>
+      <h1>Forms</h1>
+      <section v-if="altForms.length === 0">
+        <p>this pokemon has no other forms</p>
+      </section>
+      <section id="form-section" v-else>
+        <div v-for="form, i in altForms" >
+          <img :src="altSprites[i]" alt="">
+          <p>{{ form.pokemon.name }}</p></div>
+      </section>
     </div>
   </main>
 </template>
@@ -147,15 +169,20 @@ th h4 {
   margin: 0;
 }
 
-#stats-sheet > div {
- display: flex;
-  align-items: center;
+
+#form-section img {
+  width: 220px;
 }
 
-#stats-sheet > div p {
-  display: flex;
-  justify-content: space-between;
-  width: 9rem;
+#form-section div {
+  display: grid;
+  justify-content: center;
+  text-align: center;
+}
+
+#form-section {
+  display: grid;
+  grid-template-columns: repeat(4, 240px);
 }
 
 @media (max-width: 720px) {
