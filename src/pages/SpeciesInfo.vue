@@ -119,10 +119,10 @@ onBeforeMount(async () => {
         <div v-for="form, i in altForms" >
           <img :src="altSprites[i]" alt="">
           <p>{{ form.pokemon.name }}</p>
-          <div style="border: 1px solid white;">
+          <div style="border: 1px solid white; text-align: center; display: grid; justify-content: center;">
             <p>abilities</p>
-            <hr>
-            <div v-for="ability,j in altAbilites[i]"><p>{{ ability.ability.name }}</p></div>
+            <hr style="height: 1px; background-color: white; width: 60px; justify-self: center;">
+            <div style="text-align: center;" v-for="ability,j in altAbilites[i]"><p>{{ ability.ability.name.split("-").join(" ") }}</p></div>
 
           </div>
         <StatGraph :stat-list="altStats[i]"></StatGraph>
@@ -194,10 +194,11 @@ th h4 {
   object-fit: cover;
 }
 
-#form-section div {
+#form-section > div {
   display: grid;
   justify-content: center;
   text-align: center;
+  gap: 5px;
 }
 
 #form-section {
