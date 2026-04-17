@@ -24,6 +24,6 @@ defineProps(["statList"])
 #stats-sheet > div p {
   display: flex;
   justify-content: space-between;
-  width: 9rem;
+  width: 10rem;
 }
 </style>

@@ -21,6 +21,8 @@ const eggMoveList = ref()
 const levelupMoveList = ref()
 const machineMoveList = ref()
 const altSprites = ref([])
+const altStats = ref([])
+const altAbilites = ref([])
 
 
 
@@ -50,9 +52,17 @@ onBeforeMount(async () => {
  altForms.value = await getAltFormData()
  altForms.value.forEach(async e => {
   await fetch(e.pokemon.url).then(i => i.json()).then(j => altSprites.value.push(j.sprites.other['official-artwork']['front_default']))
-  console.log(altSprites.value)
  });
 
+ altForms.value.forEach(async e => {
+  await fetch(e.pokemon.url).then(i => i.json()).then(j => altStats.value.push(j.stats))
+ });
+
+ altForms.value.forEach(async e => {
+  await fetch(e.pokemon.url).then(i => i.json()).then(j => altAbilites.value.push(j.abilities))
+  console.log(altAbilites.value)
+
+ });
 })
 
 </script>
@@ -108,7 +118,15 @@ onBeforeMount(async () => {
       <section id="form-section" v-else>
         <div v-for="form, i in altForms" >
           <img :src="altSprites[i]" alt="">
-          <p>{{ form.pokemon.name }}</p></div>
+          <p>{{ form.pokemon.name }}</p>
+          <div style="border: 1px solid white;">
+            <p>abilities</p>
+            <hr>
+            <div v-for="ability,j in altAbilites[i]"><p>{{ ability.ability.name }}</p></div>
+
+          </div>
+        <StatGraph :stat-list="altStats[i]"></StatGraph>
+        </div>
       </section>
     </div>
   </main>
@@ -172,6 +190,8 @@ th h4 {
 
 #form-section img {
   width: 220px;
+  object-position: center;
+  object-fit: cover;
 }
 
 #form-section div {
@@ -182,7 +202,9 @@ th h4 {
 
 #form-section {
   display: grid;
-  grid-template-columns: repeat(4, 240px);
+  width: 100vw;
+  grid-template-columns: repeat(auto-fill, 360px);
+  justify-content: center;
 }
 
 @media (max-width: 720px) {
