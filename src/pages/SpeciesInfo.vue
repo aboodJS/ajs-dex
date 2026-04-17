@@ -23,10 +23,10 @@ const machineMoveList = ref()
 const altSprites = ref([])
 const altStats = ref([])
 const altAbilites = ref([])
+const flavorText = ref()
 
 
 
-// moves.value[0]["version_group_details"][0]["move_learn_method"].name
 
 async function getAltFormData() {
   return await fetch(data.value.species.url).then(d => d.json()).then(f => f.varieties.filter((i) => i['is_default'] === false))
@@ -45,6 +45,8 @@ async function getData() {
   eggMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'egg' )
   levelupMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'level-up' )
   machineMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'machine' )
+  flavorText.value = await fetch(data.value.species.url).then(i => i.json()).then(j => j["flavor_text_entries"].filter((e) => e.language.name === "en"))
+  console.log(flavorText.value[0])
 }
 
 onBeforeMount(async () => {
@@ -60,7 +62,6 @@ onBeforeMount(async () => {
 
  altForms.value.forEach(async e => {
   await fetch(e.pokemon.url).then(i => i.json()).then(j => altAbilites.value.push(j.abilities))
-  console.log(altAbilites.value)
 
  });
 })
@@ -76,6 +77,7 @@ onBeforeMount(async () => {
       <h1>{{ $route.params.name }}</h1>
 
       <p>{{ typeOne }}</p> <p>{{ typeTwo }}</p></span>
+      <p>{{ flavorText[0]["flavor_text"] }}</p>
 
   </div>
 
@@ -163,6 +165,10 @@ main {
 #pokemon_summery > h1 {
     grid-column-start: 2;
   grid-column-end: 2;
+}
+
+#pokemon_summery > p {
+  grid-column: span 2
 }
 
 #pokemon_summery > span {
