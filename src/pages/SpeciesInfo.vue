@@ -24,12 +24,23 @@ const altSprites = ref([])
 const altStats = ref([])
 const altAbilites = ref([])
 const flavorText = ref()
+const evoChain = ref()
+const finalEvo = ref()
 
 
 
 
 async function getAltFormData() {
   return await fetch(data.value.species.url).then(d => d.json()).then(f => f.varieties.filter((i) => i['is_default'] === false))
+}
+
+async function getEvoData() {
+  const baseUrl = data.value.species.url
+  const evoUrl =  await fetch(baseUrl).then(i => i.json()).then(j => j['evolution_chain'].url)
+
+  evoChain.value = await fetch(evoUrl).then(i => i.json()).then(j => j)
+
+  finalEvo.value =  evoChain.value.chain["evolves_to"][0]["evolves_to"][0].species.name
 }
 
 const altForms = ref()
@@ -46,7 +57,6 @@ async function getData() {
   levelupMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'level-up' )
   machineMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'machine' )
   flavorText.value = await fetch(data.value.species.url).then(i => i.json()).then(j => j["flavor_text_entries"].filter((e) => e.language.name === "en"))
-  console.log(flavorText.value[0])
 }
 
 onBeforeMount(async () => {
@@ -64,6 +74,9 @@ onBeforeMount(async () => {
   await fetch(e.pokemon.url).then(i => i.json()).then(j => altAbilites.value.push(j.abilities))
 
  });
+
+  getEvoData()
+
 })
 
 </script>
@@ -95,6 +108,15 @@ onBeforeMount(async () => {
         <tr><td v-for="ability in abilities">{{ ability.ability.name }}</td></tr>
       </tbody>
     </table>
+
+    <h1>evolution chain</h1>
+    <section id="evo-section">
+      <div>
+        {{ evoChain.chain.species.name }} &rArr;
+      </div>
+      <div>{{ evoChain.chain["evolves_to"][0].species.name }} </div>
+      <div v-if="finalEvo !== undefined"> &rArr; {{ finalEvo }}</div>
+    </section>
     <div>
       <ul>
         <h1>moves </h1>
@@ -212,6 +234,10 @@ th h4 {
   width: 100vw;
   grid-template-columns: repeat(auto-fill, 360px);
   justify-content: center;
+}
+
+#evo-section {
+  display: flex;
 }
 
 @media (max-width: 720px) {
