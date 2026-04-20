@@ -26,7 +26,7 @@ const altAbilites = ref([])
 const flavorText = ref()
 const evoChain = ref()
 const finalEvo = ref()
-
+const evoMethod = ref([])
 
 
 
@@ -39,6 +39,8 @@ async function getEvoData() {
   const evoUrl =  await fetch(baseUrl).then(i => i.json()).then(j => j['evolution_chain'].url)
 
   evoChain.value = await fetch(evoUrl).then(i => i.json()).then(j => j)
+
+
 
   finalEvo.value =  evoChain.value.chain["evolves_to"][0]["evolves_to"][0].species.name
 }
@@ -58,6 +60,9 @@ async function getData() {
   machineMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'machine' )
   flavorText.value = await fetch(data.value.species.url).then(i => i.json()).then(j => j["flavor_text_entries"].filter((e) => e.language.name === "en"))
 }
+
+
+
 
 onBeforeMount(async () => {
   await getData()
@@ -109,13 +114,11 @@ onBeforeMount(async () => {
       </tbody>
     </table>
 
+
     <h1>evolution chain</h1>
     <section id="evo-section">
-      <div>
-        {{ evoChain.chain.species.name }} &rArr;
-      </div>
-      <div>{{ evoChain.chain["evolves_to"][0].species.name }} </div>
-      <div v-if="finalEvo !== undefined"> &rArr; {{ finalEvo }}</div>
+      <div>{{ evoChain.chain.species.name }} evolves into {{ evoChain.chain["evolves_to"][0].species.name }} <span v-if="finalEvo !== undefined">and then into {{ finalEvo }}</span></div>
+      <div>evolution method: </div>
     </section>
     <div>
       <ul>
@@ -236,9 +239,7 @@ th h4 {
   justify-content: center;
 }
 
-#evo-section {
-  display: flex;
-}
+
 
 @media (max-width: 720px) {
   #pokemon_summery > img {
