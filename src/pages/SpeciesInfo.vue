@@ -118,7 +118,7 @@ onBeforeMount(async () => {
       </section>
       <section id="form-section" v-else>
         <div v-for="form, i in altForms" >
-          <img :src="altSprites.slice(0, 3)[i]" alt="">
+          <img :src="altSprites.slice(0, 5)[i]" alt="">
           <p>{{ form.pokemon.name }}</p>
           <div style="border: 1px solid white; text-align: center; display: grid; justify-content: center;">
             <p>abilities</p>
@@ -222,6 +222,7 @@ main {
 #form-section {
   display: grid;
   text-align: center;
+  gap: 10px;
   width: 100vw;
   grid-template-columns: repeat(auto-fill, 360px);
   justify-content: center;
@@ -242,6 +243,11 @@ main {
   }
 
   .move-list {
+    justify-content: center;
+  }
+
+  #abilites {
+    gap: 12px;
     justify-content: center;
   }
 }
