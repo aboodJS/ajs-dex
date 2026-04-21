@@ -102,13 +102,17 @@ onBeforeMount(async () => {
         <h1>moves </h1>
         <hr>
         <h2>level up moves</h2>
-        <ul style="display: grid; justify-content: center; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in levelupMoveList">
+        <ul v-if="levelupMoveList.length > 0" style="display: grid; justify-content: center; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in levelupMoveList">
       </MoveBox></ul>
+        <p v-else>this pokemon learns no moves from this category</p>
+
 
         <h2>machine moves</h2>
-        <ul style="display: grid; justify-content: center; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in machineMoveList"></MoveBox></ul>
+        <ul v-if="machineMoveList.length > 0" style="display: grid; justify-content: center; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in machineMoveList"></MoveBox></ul>
+        <p v-else>this pokemon learns no moves from this category</p>
         <h2>egg moves</h2>
-        <ul style="display: grid; justify-content: center; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in eggMoveList"></MoveBox></ul>
+        <ul v-if="eggMoveList.length > 0" style="display: grid; justify-content: center; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in eggMoveList"></MoveBox></ul>
+        <p v-else>this pokemon learns no moves from this category</p>
       </ul>
     </div>
     <div>
@@ -120,7 +124,7 @@ onBeforeMount(async () => {
         <div v-for="form, i in altForms" >
           <img :src="altSprites.slice(0, 5)[i]" alt="">
           <p>{{ form.pokemon.name }}</p>
-          <div style="border: 1px solid white; text-align: center; display: grid; justify-content: center;">
+          <div style="border: 1px solid white; text-align: center; display: grid; justify-content: center; width: 200px; justify-self: center;">
             <p>abilities</p>
             <hr style="height: 1px; background-color: white; width: 60px; justify-self: center;">
             <div style="text-align: center;" v-for="ability,j in altAbilites[i]"><p>{{ ability.ability.name.split("-").join(" ") }}</p></div>
