@@ -31,16 +31,7 @@ async function getAltFormData() {
   return await fetch(data.value.species.url).then(d => d.json()).then(f => f.varieties.filter((i) => i['is_default'] === false))
 }
 
-async function getEvoData() {
-  const baseUrl = data.value.species.url
-  const evoUrl =  await fetch(baseUrl).then(i => i.json()).then(j => j['evolution_chain'].url)
 
-  evoChain.value = await fetch(evoUrl).then(i => i.json()).then(j => j)
-
-
-
-  finalEvo.value =  evoChain.value.chain["evolves_to"][0]["evolves_to"][0].species.name
-}
 
 const altForms = ref()
 
