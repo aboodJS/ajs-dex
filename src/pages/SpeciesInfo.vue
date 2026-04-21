@@ -21,13 +21,25 @@ const eggMoveList = ref()
 const levelupMoveList = ref()
 const machineMoveList = ref()
 const altSprites = ref([])
+const altStats = ref([])
+const altAbilites = ref([])
+const flavorText = ref()
 
 
-
-// moves.value[0]["version_group_details"][0]["move_learn_method"].name
 
 async function getAltFormData() {
   return await fetch(data.value.species.url).then(d => d.json()).then(f => f.varieties.filter((i) => i['is_default'] === false))
+}
+
+async function getEvoData() {
+  const baseUrl = data.value.species.url
+  const evoUrl =  await fetch(baseUrl).then(i => i.json()).then(j => j['evolution_chain'].url)
+
+  evoChain.value = await fetch(evoUrl).then(i => i.json()).then(j => j)
+
+
+
+  finalEvo.value =  evoChain.value.chain["evolves_to"][0]["evolves_to"][0].species.name
 }
 
 const altForms = ref()
@@ -43,14 +55,26 @@ async function getData() {
   eggMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'egg' )
   levelupMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'level-up' )
   machineMoveList.value = fullMovesList.value.filter((m) => m["version_group_details"][0]["move_learn_method"].name === 'machine' )
+  flavorText.value = await fetch(data.value.species.url).then(i => i.json()).then(j => j["flavor_text_entries"].filter((e) => e.language.name === "en"))
 }
+
+
+
 
 onBeforeMount(async () => {
   await getData()
  altForms.value = await getAltFormData()
  altForms.value.forEach(async e => {
   await fetch(e.pokemon.url).then(i => i.json()).then(j => altSprites.value.push(j.sprites.other['official-artwork']['front_default']))
-  console.log(altSprites.value)
+ });
+
+ altForms.value.forEach(async e => {
+  await fetch(e.pokemon.url).then(i => i.json()).then(j => altStats.value.push(j.stats))
+ });
+
+ altForms.value.forEach(async e => {
+  await fetch(e.pokemon.url).then(i => i.json()).then(j => altAbilites.value.push(j.abilities))
+
  });
 
 })
@@ -66,6 +90,7 @@ onBeforeMount(async () => {
       <h1>{{ $route.params.name }}</h1>
 
       <p>{{ typeOne }}</p> <p>{{ typeTwo }}</p></span>
+      <p>{{ flavorText[0]["flavor_text"] }}</p>
 
   </div>
 
@@ -83,6 +108,9 @@ onBeforeMount(async () => {
         <tr><td v-for="ability in abilities">{{ ability.ability.name }}</td></tr>
       </tbody>
     </table>
+
+
+
     <div>
       <ul>
         <h1>moves </h1>
@@ -108,7 +136,15 @@ onBeforeMount(async () => {
       <section id="form-section" v-else>
         <div v-for="form, i in altForms" >
           <img :src="altSprites[i]" alt="">
-          <p>{{ form.pokemon.name }}</p></div>
+          <p>{{ form.pokemon.name }}</p>
+          <div style="border: 1px solid white; text-align: center; display: grid; justify-content: center;">
+            <p>abilities</p>
+            <hr style="height: 1px; background-color: white; width: 60px; justify-self: center;">
+            <div style="text-align: center;" v-for="ability,j in altAbilites[i]"><p>{{ ability.ability.name.split("-").join(" ") }}</p></div>
+
+          </div>
+        <StatGraph :stat-list="altStats[i]"></StatGraph>
+        </div>
       </section>
     </div>
   </main>
@@ -147,6 +183,10 @@ main {
   grid-column-end: 2;
 }
 
+#pokemon_summery > p {
+  grid-column: span 2
+}
+
 #pokemon_summery > span {
    grid-column-start: 2;
   grid-column-end: 2;
@@ -172,18 +212,25 @@ th h4 {
 
 #form-section img {
   width: 220px;
+  object-position: center;
+  object-fit: cover;
 }
 
-#form-section div {
+#form-section > div {
   display: grid;
   justify-content: center;
   text-align: center;
+  gap: 5px;
 }
 
 #form-section {
   display: grid;
-  grid-template-columns: repeat(4, 240px);
+  width: 100vw;
+  grid-template-columns: repeat(auto-fill, 360px);
+  justify-content: center;
 }
+
+
 
 @media (max-width: 720px) {
   #pokemon_summery > img {
