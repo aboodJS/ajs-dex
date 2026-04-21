@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue';
+import { onActivated, onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import MoveBox from '@/components/MoveBox.vue';
 import StatGraph from '@/components/StatGraph.vue';
@@ -55,7 +55,7 @@ onBeforeMount(async () => {
   await getData()
  altForms.value = await getAltFormData()
  altForms.value.forEach(async e => {
-  await fetch(e.pokemon.url).then(i => i.json()).then(j => altSprites.value.push(j.sprites.other['official-artwork']['front_default']))
+  await fetch(e.pokemon.url).then(i => i.json()).then(j => altSprites.value.push(j.sprites.other))
  });
 
  altForms.value.forEach(async e => {
@@ -122,7 +122,7 @@ onBeforeMount(async () => {
       </section>
       <section id="form-section" v-else>
         <div v-for="form, i in altForms" >
-          <img loading="lazy" :src="altSprites.slice(0, 5)[i]" alt="">
+          <img loading="lazy" :src="altSprites.slice(0, 5)[i]['official-artwork']['front_default']" alt="">
           <p>{{ form.pokemon.name }}</p>
           <div style="border: 1px solid white; text-align: center; display: grid; justify-content: center; width: 200px; justify-self: center;">
             <p>abilities</p>
