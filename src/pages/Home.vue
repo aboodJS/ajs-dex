@@ -40,7 +40,7 @@ onMounted(() => {
     <section>
       <div v-for="mon in filteredSearch" >
         <img loading="lazy" :src="`https://github.com/PokeAPI/sprites/raw/master/sprites/pokemon/other/showdown/${mon.url.match(/\d+/g)[1]}.gif`" :alt="mon.name">
-        <RouterLink :to="{path: `/pokemon/${mon.name}`}"><p>{{ mon.name }}</p></RouterLink>
+        <RouterLink :to="{path: `/${mon.name}`}"><p>{{ mon.name }}</p></RouterLink>
       </div>
     </section>
   </main>
