@@ -47,6 +47,12 @@ onMounted(() => {
 </template>
 
 <style scoped>
+main {
+   display: grid;
+    justify-content: center;
+    width: 100vw;
+}
+
 nav {
   display: grid;
   justify-content: center;
