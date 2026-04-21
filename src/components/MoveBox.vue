@@ -39,18 +39,18 @@ onMounted(() => {
 
 <style scoped>
 p {
-  height: 35px;
+  height: 65px;
   overflow: visible;
 }
 
 li {
   border-radius: 4px;
   width: 340px;
-  max-height: 370px;
+  max-height: stretch;
   overflow: hidden;
   cursor: pointer;
   background-color: rgb(57, 64, 71);
-  transition: max-height 200ms linear;
+  transition: max-height 200ms ease-in-out;
 }
 
 .hide {

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import MoveBox from '@/components/MoveBox.vue';
@@ -85,42 +84,33 @@ onBeforeMount(async () => {
 
   </div>
 
-  <h1 class="">Stats</h1>
+  <h1 style="justify-self: center;" class="">Stats</h1>
 
      <StatGraph :stat-list="baseStats"></StatGraph>
-    <table>
-      <tbody>
+  <div id="ability-list">
+    <h1>abilites</h1>
+    <div id="abilites"><p v-for="ability in abilities">{{ ability.ability.name }}</p></div>
 
-          <th>
-
-            <h4>Abilities</h4>
-          </th>
-
-        <tr><td v-for="ability in abilities">{{ ability.ability.name }}</td></tr>
-      </tbody>
-    </table>
+  </div>
 
 
 
-    <div>
+    <div class="move-list">
       <ul>
         <h1>moves </h1>
         <hr>
         <h2>level up moves</h2>
-        <ul style="display: grid; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in levelupMoveList">
+        <ul style="display: grid; justify-content: center; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in levelupMoveList">
       </MoveBox></ul>
 
-        <hr>
         <h2>machine moves</h2>
-        <ul style="display: grid; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in machineMoveList"></MoveBox></ul>
-        <hr>
+        <ul style="display: grid; justify-content: center; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in machineMoveList"></MoveBox></ul>
         <h2>egg moves</h2>
-        <ul style="display: grid; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in eggMoveList"></MoveBox></ul>
+        <ul style="display: grid; justify-content: center; gap: 7px;"><MoveBox :url="move.move.url" v-for="move in eggMoveList"></MoveBox></ul>
       </ul>
-      <hr>
     </div>
     <div>
-      <h1>Forms</h1>
+      <h1 style="justify-self: center;">Forms</h1>
       <section v-if="altForms.length === 0">
         <p>this pokemon has no other forms</p>
       </section>
@@ -147,6 +137,7 @@ main {
   display: grid;
    background-color: rgb(41, 34, 34);
   color: white;
+  gap: 12px;
 }
 
 #pokemon_summery {
@@ -163,6 +154,7 @@ main {
 
 #pokemon_summery > img {
   height: 150px;
+  width: 150px;
   grid-column-start: 1;
   grid-column-end: 1;
   grid-row-start: 1;
@@ -183,22 +175,31 @@ main {
   grid-column-end: 2;
 }
 
-table {
+.move-list {
+  width: 60vw;
+  display: grid;
+  gap: 12px;
+  justify-self: center;
   text-align: center;
-  border: 1px white solid;
 }
 
-td {
-  border: 1px white solid;
-
-}
-
-
-
-th h4 {
+#ability-list {
+  display: grid;
+  gap: 5px;
+  justify-content: center;
   text-align: center;
-  margin: 0;
+  width: 50vw;
+  justify-self: center;
 }
+
+#abilites {
+  display: flex;
+  text-align: center;
+  justify-self: center;
+  width: 25vw;
+  justify-content: space-evenly;
+}
+
 
 
 #form-section img {
@@ -216,6 +217,7 @@ th h4 {
 
 #form-section {
   display: grid;
+  text-align: center;
   width: 100vw;
   grid-template-columns: repeat(auto-fill, 360px);
   justify-content: center;
