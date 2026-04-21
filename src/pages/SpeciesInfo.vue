@@ -203,8 +203,10 @@ main {
 
 
 #form-section img {
-  width: 220px;
+  width: 150px;
+  height: 150px;
   object-position: center;
+  justify-self: center;
   object-fit: cover;
 }
 
@@ -228,12 +230,17 @@ main {
 @media (max-width: 720px) {
   #pokemon_summery > img {
     height: 100px;
+    width: 100px;
     align-self: center;
   }
 
   #pokemon_summery {
     gap: 60px;
     width: 50vw;
+  }
+
+  .move-list {
+    justify-content: center;
   }
 }
 
