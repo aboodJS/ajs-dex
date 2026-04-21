@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [{path: '/', component: Home}, {path: "/:name", component: SpeciesInfo}],
+  routes: [{path: '/', name: "pokedex", component: Home}, {path: "/:name",name: "pokemon", component: SpeciesInfo}],
 })
 
 export default router
