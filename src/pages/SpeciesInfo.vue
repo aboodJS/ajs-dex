@@ -122,7 +122,7 @@ onBeforeMount(async () => {
       </section>
       <section id="form-section" v-else>
         <div v-for="form, i in altForms" >
-          <img :src="altSprites.slice(0, 5)[i]" alt="">
+          <img loading="lazy" :src="altSprites.slice(0, 5)[i]" alt="">
           <p>{{ form.pokemon.name }}</p>
           <div style="border: 1px solid white; text-align: center; display: grid; justify-content: center; width: 200px; justify-self: center;">
             <p>abilities</p>
