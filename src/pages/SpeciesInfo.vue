@@ -24,9 +24,6 @@ const altSprites = ref([])
 const altStats = ref([])
 const altAbilites = ref([])
 const flavorText = ref()
-const evoChain = ref()
-const finalEvo = ref()
-const evoMethod = ref([])
 
 
 
@@ -80,8 +77,6 @@ onBeforeMount(async () => {
 
  });
 
-  getEvoData()
-
 })
 
 </script>
@@ -115,11 +110,7 @@ onBeforeMount(async () => {
     </table>
 
 
-    <h1>evolution chain</h1>
-    <section id="evo-section">
-      <div>{{ evoChain.chain.species.name }} evolves into {{ evoChain.chain["evolves_to"][0].species.name }} <span v-if="finalEvo !== undefined">and then into {{ finalEvo }}</span></div>
-      <div>evolution method: </div>
-    </section>
+
     <div>
       <ul>
         <h1>moves </h1>
