@@ -116,7 +116,7 @@ onBeforeMount(async () => {
       </ul>
     </div>
     <div>
-      <h1 style="justify-self: center;">Forms</h1>
+      <h1 style="justify-self: center; text-align: center;">Forms</h1>
       <section v-if="altForms.length === 0">
         <p>this pokemon has no other forms</p>
       </section>
@@ -228,7 +228,7 @@ main {
   text-align: center;
   gap: 10px;
   width: 100vw;
-  grid-template-columns: repeat(auto-fill, 360px);
+  grid-template-columns: repeat(auto-fit, 360px);
   justify-content: center;
 }
 
