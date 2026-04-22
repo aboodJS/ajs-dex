@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onActivated, onBeforeMount, ref } from 'vue';
+import { onActivated, onBeforeMount, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import MoveBox from '@/components/MoveBox.vue';
 import StatGraph from '@/components/StatGraph.vue';
@@ -19,8 +19,9 @@ const fullMovesList = ref()
 const eggMoveList = ref()
 const levelupMoveList = ref()
 const machineMoveList = ref()
-const altSprites = ref([])
+const altSprites = ref(new Set())
 const altStats = ref([])
+const fullSprites = ref()
 const altAbilites = ref([])
 const flavorText = ref()
 
@@ -50,12 +51,13 @@ async function getData() {
 
 
 
-
 onBeforeMount(async () => {
   await getData()
  altForms.value = await getAltFormData()
  altForms.value.forEach(async e => {
-  await fetch(e.pokemon.url).then(i => i.json()).then(j => altSprites.value.push(j.sprites.other))
+  await fetch(e.pokemon.url).then(i => i.json()).then((j) => altSprites.value.add(j.sprites.other['official-artwork']['front_default']))
+  fullSprites.value = Array.from(altSprites.value)
+
  });
 
  altForms.value.forEach(async e => {
@@ -67,9 +69,9 @@ onBeforeMount(async () => {
 
  });
 
- console.log(altSprites.value)
 
 })
+
 
 </script>
 
@@ -122,7 +124,7 @@ onBeforeMount(async () => {
       </section>
       <section id="form-section" v-else>
         <div v-for="form, i in altForms" >
-          <img loading="lazy" :src="altSprites.slice(0, 5)[i]['official-artwork']['front_default']" alt="">
+          <img loading="lazy" :src="fullSprites[i]" alt="">
           <p>{{ form.pokemon.name }}</p>
           <div style="border: 1px solid white; text-align: center; display: grid; justify-content: center; width: 200px; justify-self: center;">
             <p>abilities</p>
