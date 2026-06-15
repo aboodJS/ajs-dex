@@ -2,18 +2,22 @@
 import SideBar from '@/components/SideBar.vue';
 import { Icon } from '@iconify/vue';
 import { Pokedex } from 'pokeapi-js-wrapper';
-import { computed, onMounted, ref, type Ref } from 'vue';
+import { computed, onBeforeMount, onMounted, ref, type Ref } from 'vue';
 
 const dex = new Pokedex({cacheImages: true})
 
-const pokemon: Ref<[Object]> = ref([])
+const pokemon = ref();
 const query = ref("")
 
 
 
+const filteredResults = computed(() => pokemon.value.filter((p) => p.name.includes(query.value)))
 
 
-onMounted(() => {
+
+onBeforeMount(async () => {
+  pokemon.value = await (await dex.getPokemonSpeciesList()).results
+  console.log(filteredResults.value)
 })
 </script>
 
@@ -31,9 +35,11 @@ onMounted(() => {
       </div>
       </nav>
     <section>
-      <div v-for="mon in filteredSearch" >
-        <img loading="lazy" :src="`https://github.com/PokeAPI/sprites/raw/master/sprites/pokemon/other/showdown/${mon.url.match(/\d+/g)[1]}.gif`" :alt="mon.name">
-        <RouterLink :to="{path: `/${mon.name === 'zygarde' ? 'zygarde-complete' : mon.name === 'giratina' ? 'giratina-altered' : mon.name === 'meowstic' ? 'meowstic-male' : mon.name === 'pyroar' ? 'pyroar-male' : mon.name}`}"><p>{{ mon.name }}</p></RouterLink>
+      <div  v-for="mon, i in filteredResults" >
+        <img loading="lazy" src="https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/official-artwork/{{ i + 1 }}.png" alt="" srcset="">
+
+          <div>{{ mon.name }}</div>
+
       </div>
     </section>
   </main>
