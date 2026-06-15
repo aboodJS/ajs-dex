@@ -48,9 +48,12 @@ onMounted(() => {
 
 <style scoped>
 main {
-   display: grid;
-    justify-content: center;
-    width: 100vw;
+  display: grid;
+  justify-content: center;
+  gap: 12px;
+  width: 100vw;
+  background-color: rgb(41, 34, 34);
+   color: white;
 }
 
 nav {
@@ -95,10 +98,7 @@ section a {
 }
 
 
-main {
-  display: grid;
-  gap: 12px;
-}
+
 
 input {
   width: 950px;
@@ -130,11 +130,6 @@ background-color: rgb(41, 34, 34);
   position: absolute;
   font-size: x-large;
   right: 0;
-}
-
-main {
-  background-color: rgb(41, 34, 34);
-  color: white;
 }
 
 #mobile-bar {
