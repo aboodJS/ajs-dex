@@ -30,6 +30,8 @@ onBeforeMount(async() => {
 
 onMounted(() => {
   console.log(pokemonData.value)
+  console.log(speciesData.value.varieties[2].pokemon.url.match(/\d+/g)[1])
+  console.log(speciesData.value.varieties)
 })
 
 
@@ -51,6 +53,12 @@ onMounted(() => {
       </ul>
     </div>
 <StatGraph :stat-list="pokemonData.stats"></StatGraph>
+
+<div>
+<h2>forms</h2>
+<ul id="forms-list" v-if="speciesData.varieties.length > 1"><li v-for="form, i in speciesData.varieties.filter((f) => f.is_default === false)"> <img :src="`https://github.com/PokeAPI/sprites/raw/master/sprites/pokemon/other/showdown/${form.pokemon.url.match(/\d+/g)[1]}.gif`" :alt="form.pokemon.name"><p>{{ form.pokemon.name.split("-").join(" ") }}</p></li></ul>
+<p v-else>this pokemon has no other forms</p>
+</div>
  </main>
  </template>
 
@@ -58,6 +66,19 @@ onMounted(() => {
 <style scoped>
 main > * {
   margin-block: 18px;
+  margin-inline: auto;
+  width: fit-content;
+  text-align: center;
+
+}
+
+li {
+  list-style: none;
+}
+
+li img {
+  height: 8rem;
+  width: 8rem;
 }
 
 main {
@@ -69,18 +90,14 @@ main {
 }
 
 #sprite-box {
+  margin-block: 0;
   display: grid;
-  margin-inline: auto;
   width: 40vw;
   justify-content: center;
   align-content: center;
-  text-align: center;
 }
 
-#ability-list {
-  width: fit-content;
-  margin-inline: auto;
-}
+
 
 #sprite-box img {
   column-span: all;
@@ -90,6 +107,11 @@ main {
 
 #sprite-box h1 {
   height: fit-content;
+}
+
+#forms-list {
+  display: flex;
+  gap: 12px;
 }
 
 
