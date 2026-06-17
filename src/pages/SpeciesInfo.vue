@@ -14,24 +14,32 @@ const speciesData = ref([])
 const description = ref()
 const preEvo = ref()
 const pokemonData = ref()
+const otherFormsData = ref([])
+const otherformsStats = ref([])
 
 
+async function GetotherFromsStats() {
+    for (let i = 0; i < otherFormsData.value.length; i++) {
+     await fetch(otherFormsData.value[i].pokemon.url).then(d => d.json()).then(r => otherformsStats.value.push(r.stats))
+
+    }
+}
 
 
 
 onBeforeMount(async() => {
   speciesData.value =  await fetch(speciesUrl).then(d => d.json())
   pokemonData.value = await fetch(speciesData.value.varieties[0].pokemon.url).then(d => d.json())
+  otherFormsData.value = speciesData.value.varieties.filter((d) => d.is_default !== true)
   const flavorText = speciesData.value.flavor_text_entries.filter((text) => text.language.name === 'en' )[0]
   description.value = flavorText
   preEvo.value = speciesData.value.evolves_from_species
-
 })
 
 onMounted(() => {
-  console.log(pokemonData.value)
-  console.log(speciesData.value.varieties[2].pokemon.url.match(/\d+/g)[1])
-  console.log(speciesData.value.varieties)
+  GetotherFromsStats()
+  console.log(pokemonData.value.moves)
+
 })
 
 
@@ -56,7 +64,9 @@ onMounted(() => {
 
 <div>
 <h2>forms</h2>
-<ul id="forms-list" v-if="speciesData.varieties.length > 1"><li v-for="form, i in speciesData.varieties.filter((f) => f.is_default === false)"> <img :src="`https://github.com/PokeAPI/sprites/raw/master/sprites/pokemon/other/showdown/${form.pokemon.url.match(/\d+/g)[1]}.gif`" :alt="form.pokemon.name"><p>{{ form.pokemon.name.split("-").join(" ") }}</p></li></ul>
+<ul id="forms-list" v-if="speciesData.varieties.length > 1"><li v-for="form, i in speciesData.varieties.filter((f) => f.is_default === false)"> <img :src="`https://github.com/PokeAPI/sprites/raw/master/sprites/pokemon/other/showdown/${form.pokemon.url.match(/\d+/g)[1]}.gif`" :alt="form.pokemon.name"><p>{{ form.pokemon.name.split("-").join(" ") }}</p>
+  <StatGraph :stat-list="otherformsStats[i]"></StatGraph>
+</li></ul>
 <p v-else>this pokemon has no other forms</p>
 </div>
  </main>
@@ -110,7 +120,9 @@ main {
 }
 
 #forms-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2,55%);
+  grid-template-rows: repeat(auto-fill, 1fr);
   gap: 12px;
 }
 
