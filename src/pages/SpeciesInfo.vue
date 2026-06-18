@@ -25,6 +25,14 @@ async function GetotherFromsStats() {
     }
 }
 
+function GetMovesByCategory(category: String) {
+  return pokemonData.value.moves.filter(m => m.version_group_details[0].move_learn_method.name === category)
+}
+
+// function GetMovesByCategory() {
+//   console.log(pokemonData.value.moves[0].)
+// }
+
 
 
 onBeforeMount(async() => {
@@ -38,7 +46,7 @@ onBeforeMount(async() => {
 
 onMounted(() => {
   GetotherFromsStats()
-  console.log(pokemonData.value.moves)
+  console.log(GetMovesByCategory('level-up'))
 
 })
 
@@ -69,6 +77,21 @@ onMounted(() => {
 </li></ul>
 <p v-else>this pokemon has no other forms</p>
 </div>
+
+<div>
+  <h2>Moves</h2>
+  <div>
+    <h3>level up moves</h3>
+    <ul class="move-list">
+      <li v-for="move in GetMovesByCategory('level-up')">
+        <MoveBox  :url="move.move.url"></MoveBox>
+      </li>
+
+    </ul>
+
+  </div>
+</div>
+
  </main>
  </template>
 
@@ -126,6 +149,12 @@ main {
   gap: 12px;
 }
 
-
+#move-list {
+  display: grid;
+  height: fit-content;
+  padding: 0;
+  margin: 0;
+  gap: 8px;
+}
 
 </style>
