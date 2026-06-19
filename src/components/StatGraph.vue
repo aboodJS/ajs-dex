@@ -13,6 +13,7 @@ defineProps(["statList"])
 <style scoped>
 #stats-sheet {
   justify-self: center;
+  align-content: center;
   display: grid;
   gap: 4px;
 }
