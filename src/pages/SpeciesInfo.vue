@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onActivated, onBeforeMount, onMounted, ref } from 'vue';
+import { onActivated, onBeforeMount, onMounted, ref, useTemplateRef } from 'vue';
 import { useRoute } from 'vue-router';
 import MoveBox from '@/components/MoveBox.vue';
 import StatGraph from '@/components/StatGraph.vue';
@@ -17,6 +17,9 @@ const pokemonData = ref()
 const otherFormsData = ref([])
 const otherformsStats = ref([])
 
+const levelup_list = useTemplateRef("levelup_list")
+const egg_list = useTemplateRef("egg_list")
+const machine_list = useTemplateRef("machine_list")
 
 async function GetotherFromsStats() {
     for (let i = 0; i < otherFormsData.value.length; i++) {
@@ -28,12 +31,6 @@ async function GetotherFromsStats() {
 function GetMovesByCategory(category: String) {
   return pokemonData.value.moves.filter(m => m.version_group_details[0].move_learn_method.name === category)
 }
-
-// function GetMovesByCategory() {
-//   console.log(pokemonData.value.moves[0].)
-// }
-
-
 
 onBeforeMount(async() => {
   speciesData.value =  await fetch(speciesUrl).then(d => d.json())
@@ -80,14 +77,32 @@ onMounted(() => {
 
 <div>
   <h2>Moves</h2>
-  <div>
-    <h3>level up moves</h3>
-    <ul class="move-list">
-      <li v-for="move in GetMovesByCategory('level-up')">
-        <MoveBox  :url="move.move.url"></MoveBox>
-      </li>
+  <div id="move-section">
+    <div>
+      <h3 @click="levelup_list?.classList.toggle('closed')">level up moves</h3>
+      <ul class="move-list closed" ref="levelup_list">
+        <li v-for="move in GetMovesByCategory('level-up')">
+          <MoveBox  :url="move.move.url"></MoveBox>
+        </li>
 
-    </ul>
+      </ul>
+    </div>
+
+    <div>
+      <h3 @click="egg_list?.classList.toggle('closed')">egg moves</h3>
+
+      <ul ref="egg_list" class="move-list closed"><li v-for="move in GetMovesByCategory('egg')">
+        <MoveBox :url="move.move.url"></MoveBox>
+      </li></ul>
+    </div>
+
+      <div>
+      <h3 @click="machine_list?.classList.toggle('closed')">machine moves</h3>
+
+      <ul ref="machine_list" class="move-list closed"><li v-for="move in GetMovesByCategory('machine')">
+        <MoveBox :url="move.move.url"></MoveBox>
+      </li></ul>
+    </div>
 
   </div>
 </div>
@@ -149,12 +164,21 @@ main {
   gap: 12px;
 }
 
-#move-list {
+#move-section {
+  display: flex;
+}
+
+.move-list {
   display: grid;
   height: fit-content;
   padding: 0;
   margin: 0;
   gap: 8px;
+}
+
+.closed {
+  overflow-y: hidden;
+  height: 0px;
 }
 
 </style>
