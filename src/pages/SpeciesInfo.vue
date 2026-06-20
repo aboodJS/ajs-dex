@@ -141,6 +141,8 @@ main {
   margin-block: 0;
   display: grid;
   width: 40vw;
+  gap: 7px;
+  font-size: 0.9em;
   justify-content: center;
   align-content: center;
 }
@@ -170,15 +172,29 @@ main {
 
 .move-list {
   display: grid;
-  height: fit-content;
+  max-height: 6000px;
   padding: 0;
   margin: 0;
   gap: 8px;
+  transition: max-height 300ms;
 }
 
 .closed {
   overflow-y: hidden;
-  height: 0px;
+  max-height: 0;
+  transition: max-height 300ms;
+
+}
+
+@media (max-width: 720px) {
+  #forms-list {
+    grid-template-columns: 1fr;
+  }
+
+  #move-section {
+    display: grid;
+    gap: 5px;
+  }
 }
 
 </style>
