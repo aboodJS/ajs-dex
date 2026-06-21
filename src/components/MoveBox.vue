@@ -45,7 +45,7 @@ p {
 
 li {
   border-radius: 4px;
-  width: 340px;
+  width: 200px;
   max-height: stretch;
   overflow: hidden;
   cursor: pointer;

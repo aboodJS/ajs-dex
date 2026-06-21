@@ -6,7 +6,9 @@ import StatGraph from '@/components/StatGraph.vue';
 
 const routeParams = useRoute()
 
-
+const show = ref(false)
+const show2 = ref(false)
+const show3 = ref(false)
 
 const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${routeParams.params.name}`
 
@@ -79,29 +81,37 @@ onMounted(() => {
   <h2>Moves</h2>
   <div id="move-section">
     <div>
-      <h3 @click="levelup_list?.classList.toggle('closed')">level up moves</h3>
-      <ul class="move-list closed" ref="levelup_list">
-        <li v-for="move in GetMovesByCategory('level-up')">
-          <MoveBox  :url="move.move.url"></MoveBox>
-        </li>
+      <h3 @click="show = !show">level up moves</h3>
+      <Transition>
+        <ul v-show="show"  class="move-list" ref="levelup_list">
+          <li v-for="move in GetMovesByCategory('level-up')">
+            <MoveBox  :url="move.move.url"></MoveBox>
+          </li>
+        </ul>
 
-      </ul>
+      </Transition>
+
     </div>
 
     <div>
-      <h3 @click="egg_list?.classList.toggle('closed')">egg moves</h3>
+      <h3 @click="show2 = !show2">egg moves</h3>
+      <Transition>
+        <ul v-show="show2"  ref="egg_list" class="move-list"><li v-for="move in GetMovesByCategory('egg')">
+          <MoveBox :url="move.move.url"></MoveBox>
+        </li></ul>
 
-      <ul ref="egg_list" class="move-list closed"><li v-for="move in GetMovesByCategory('egg')">
-        <MoveBox :url="move.move.url"></MoveBox>
-      </li></ul>
+      </Transition>
     </div>
 
       <div>
-      <h3 @click="machine_list?.classList.toggle('closed')">machine moves</h3>
+      <h3 @click="show3 = !show3">machine moves</h3>
 
-      <ul ref="machine_list" class="move-list closed"><li v-for="move in GetMovesByCategory('machine')">
-        <MoveBox :url="move.move.url"></MoveBox>
-      </li></ul>
+      <Transition>
+        <ul v-show="show3" ref="machine_list" class="move-list"><li v-for="move in GetMovesByCategory('machine')">
+          <MoveBox :url="move.move.url"></MoveBox>
+        </li></ul>
+
+      </Transition>
     </div>
 
   </div>
@@ -167,23 +177,47 @@ main {
 }
 
 #move-section {
-  display: flex;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(3, 25%);
+  width: 100vw;
+  justify-content: space-evenly;
 }
 
 .move-list {
   display: grid;
-  max-height: 6000px;
+  justify-content: center;
+  text-align: center;
+  max-height: fit-content;
+  overflow: hidden;
   padding: 0;
   margin: 0;
   gap: 8px;
-  transition: max-height 300ms;
 }
 
-.closed {
-  overflow-y: hidden;
-  max-height: 0;
-  transition: max-height 300ms;
 
+
+.v-enter-from {
+  max-height: 5px ;
+}
+
+.v-enter-to {
+  max-height: 6000px;
+}
+
+.v-leave-from {
+  max-height: 6000px;
+}
+
+
+.v-leave-to {
+  max-height: 5px ;
+
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
 }
 
 @media (max-width: 720px) {
@@ -192,7 +226,8 @@ main {
   }
 
   #move-section {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 5px;
   }
 }
