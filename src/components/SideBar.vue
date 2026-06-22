@@ -43,7 +43,7 @@ aside {
 .menu-btn {
   position: absolute;
   font-size: 25px;
-  left: 115%;
+  left: 170%;
   top: 4%
 }
 
@@ -63,7 +63,7 @@ a {
 }
 
 .hide {
-  margin-left: -9%;
+  margin-left: -15%;
 
 }
 
