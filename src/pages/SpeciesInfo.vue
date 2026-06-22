@@ -3,6 +3,8 @@ import { onActivated, onBeforeMount, onMounted, ref, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router';
 import MoveBox from '@/components/MoveBox.vue';
 import StatGraph from '@/components/StatGraph.vue';
+import { Icon } from '@iconify/vue';
+
 
 const routeParams = useRoute()
 
@@ -81,7 +83,7 @@ onMounted(() => {
   <h2>Moves</h2>
   <div id="move-section">
     <div>
-      <h3 @click="show = !show">level up moves</h3>
+      <h3 @click="show = !show">level up moves <Icon v-show="show === false" icon="mi:arrow-left"></Icon> <Icon v-show="show === true" icon="mi:arrow-down"></Icon> </h3>
       <Transition>
         <ul v-show="show"  class="move-list" ref="levelup_list">
           <li v-for="move in GetMovesByCategory('level-up')">
@@ -94,7 +96,7 @@ onMounted(() => {
     </div>
 
     <div>
-      <h3 @click="show2 = !show2">egg moves</h3>
+      <h3 @click="show2 = !show2">egg moves <Icon v-show="show2 === false" icon="mi:arrow-left"></Icon> <Icon v-show="show2 === true" icon="mi:arrow-down"></Icon></h3>
       <Transition>
         <ul v-show="show2"  ref="egg_list" class="move-list"><li v-for="move in GetMovesByCategory('egg')">
           <MoveBox :url="move.move.url"></MoveBox>
@@ -104,7 +106,7 @@ onMounted(() => {
     </div>
 
       <div>
-      <h3 @click="show3 = !show3">machine moves</h3>
+      <h3 @click="show3 = !show3">machine moves <Icon v-show="show3 === false" icon="mi:arrow-left"></Icon> <Icon v-show="show3 === true" icon="mi:arrow-down"></Icon></h3>
 
       <Transition>
         <ul v-show="show3" ref="machine_list" class="move-list"><li v-for="move in GetMovesByCategory('machine')">
@@ -128,6 +130,13 @@ main > * {
   width: fit-content;
   text-align: center;
 
+}
+
+h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 li {
@@ -217,7 +226,7 @@ main {
 
 .v-enter-active,
 .v-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
 }
 
 @media (max-width: 720px) {
