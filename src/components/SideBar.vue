@@ -1,33 +1,26 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
-const isSideOpen =  ref(true)
+const isSideOpen = ref(true);
 
 function switchState() {
-  isSideOpen.value = !isSideOpen.value
-  console.log(isSideOpen.value)
+  isSideOpen.value = !isSideOpen.value;
+  console.log(isSideOpen.value);
 }
-
-
 </script>
-
 
 <template>
   <aside :class="isSideOpen === true ? 'hide' : ''">
     <section>
-      <div @click="switchState" class="menu-btn" >
-        <Icon  icon="mdi:menu" />
-
+      <div @click="switchState" class="menu-btn">
+        <Icon icon="mdi:menu" />
       </div>
       <h1>ajs-dex</h1>
-        <a href="">
-      <RouterLink to="/">Home</RouterLink>
-    </a>
-    <a href="https://github.com/aboodJS/ajs-dex" target="_blank">
-      About
-    </a>
+      <a href="">
+        <RouterLink to="/">Home</RouterLink>
+      </a>
+      <a href="https://github.com/aboodJS/ajs-dex" target="_blank"> About </a>
     </section>
-
   </aside>
 </template>
 
@@ -35,16 +28,15 @@ function switchState() {
 aside {
   display: grid;
   height: 100vh;
-  position:absolute;
+  position: absolute;
   transition: margin 200ms;
-
 }
 
 .menu-btn {
   position: absolute;
   font-size: 25px;
-  left: 115%;
-  top: 4%
+  left: 130%;
+  top: 1%;
 }
 
 section {
@@ -63,8 +55,7 @@ a {
 }
 
 .hide {
-  margin-left: -9%;
-
+  margin-left: -12%;
 }
 
 @media (max-width: 720px) {
@@ -76,5 +67,4 @@ a {
     display: none;
   }
 }
-
 </style>

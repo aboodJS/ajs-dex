@@ -49,87 +49,170 @@ onMounted(() => {
 <style scoped>
 main {
   display: grid;
-  justify-content: center;
-  gap: 12px;
-  width: 100vw;
-  background-color: rgb(41, 34, 34);
-   color: white;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #1f1a1a 0%, #151212 100%);
+  color: #f5f5f5;
+  padding: 24px 20px 16px;
+  gap: 20px;
+  overflow-x: hidden;
 }
 
 nav {
   display: grid;
-  justify-content: center;
-  height: 15vh;
+  justify-items: center;
+  align-content: start;
+  gap: 16px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 nav h1 {
-  text-align: center;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: #ffffff;
 }
 
-section {
-  margin: auto;
-  gap: 12px;
-  height: 83vh;
-  width: fit-content;
-  overflow: scroll;
-  justify-content: center;
-  display: grid;
-  list-style: none;
-  grid-template-columns: repeat(5, 180px);
+#mobile-bar h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
-section img {
-  height: 6rem;
-}
-
-section div {
-  display: grid;
-  text-align: center;
-  justify-content: center;
+#mobile-bar a {
+  color: #d7dcff;
   text-decoration: none;
-  color: white;
-  height: fit-content;
-  align-content: center;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
 }
 
-section a {
-    text-decoration: none;
-  color: white;
-}
-
-
-
-
-input {
-  width: 950px;
-  border: 0;
-  border-bottom: 2px rgba(97, 97, 97, 0.375) solid;
-  outline: none;
-  font-size: large;
-  background-color: rgb(41, 34, 34);
-  color: white;
-}
-
-input:focus {
-  border-color: rgb(93, 93, 255);
-}
-
-input:focus > *  {
-  color: rgb(93, 93, 255);
+#mobile-bar a:hover {
+  color: #ffffff;
 }
 
 .searchBox {
   position: relative;
-  font-size: large;
-background-color: rgb(41, 34, 34);
-  color: white;
-  width: fit-content;
+  width: 100%;
+  max-width: 720px;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px 44px 12px 16px;
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: capitalize;
+}
+
+input:focus {
+  border-color: #6b7cff;
+  box-shadow: 0 0 0 3px rgba(107, 124, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.09);
 }
 
 .absolute {
   position: absolute;
-  font-size: x-large;
-  right: 0;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  font-size: 1.35rem;
+  color: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+}
+
+section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  height: calc(100vh - 180px);
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  padding: 4px 6px 16px;
+  align-content: start;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+section::-webkit-scrollbar {
+  width: 8px;
+}
+
+section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+section::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+}
+
+section div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 170px;
+  padding: 16px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+section div:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(107, 124, 255, 0.45);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+section img {
+  height: 72px;
+  max-width: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+section a {
+  text-decoration: none;
+  color: #f1f3ff;
+}
+
+section p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0.01em;
+}
+
+section a:hover p {
+  color: #ffffff;
 }
 
 #mobile-bar {
@@ -137,13 +220,17 @@ background-color: rgb(41, 34, 34);
 }
 
 @media (max-width: 720px) {
-  section {
-    grid-template-columns: repeat(2, 220px);
-    gap: 0;
+  main {
+    padding: 16px 12px 12px;
+    gap: 14px;
+  }
+
+  nav {
+    gap: 12px;
   }
 
   .searchBox {
-    width: 200px;
+    max-width: 100%;
   }
 
   .mobile-hidden {
@@ -151,13 +238,23 @@ background-color: rgb(41, 34, 34);
   }
 
   #mobile-bar {
-  display: flex;
-  justify-content: space-between;
-  width: 100vw;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+  }
+
+  section {
+    height: calc(100vh - 170px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 2px 2px 12px;
+  }
+
+  section div {
+    min-height: 150px;
+    padding: 14px 10px;
+  }
 }
-
-
-}
-
 </style>
