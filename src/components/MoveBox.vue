@@ -38,24 +38,56 @@ onMounted(() => {
 </template>
 
 <style scoped>
-p {
-  height: 65px;
-  overflow: visible;
+li {
+  list-style: none;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  padding: 10px 14px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  overflow: hidden;
+  max-height: 420px;
+  transition: max-height 220ms ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-li {
-  border-radius: 4px;
-  width: 340px;
-  max-height: stretch;
-  overflow: hidden;
-  cursor: pointer;
-  background-color: rgb(57, 64, 71);
-  transition: max-height 200ms ease-in-out;
+li:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(107, 124, 255, 0.35);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
 }
 
 .hide {
-  max-height: 35px;
+  max-height: 44px;
+}
 
+p {
+  margin: 0;
+  padding: 6px 0;
+  line-height: 1.45;
+  color: rgba(245, 245, 245, 0.9);
+  text-transform: capitalize;
+}
+
+.move-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+
+li p:last-child {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.9rem;
+  text-align: center;
+  text-transform: none;
+  color: rgba(245, 245, 245, 0.8);
 }
 </style>
 
